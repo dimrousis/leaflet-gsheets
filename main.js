@@ -24,7 +24,10 @@ let panelID = "my-info-panel";
  */
 function init() {
   // Create a new Leaflet map centered on the continental US
-  map = L.map("map").setView([51.5, -0.1], 14);
+  map = L.map("map").setView([39.65384512599313, 20.866366223216712], 15);
+  // map = L.map("map").setView([51.5, -0.1], 14);
+
+  var lc = L.control.locate().addTo(map);
 
   // This is the Carto Positron basemap
   L.tileLayer(
@@ -108,9 +111,11 @@ function addGeoms(data) {
       layer.on({
         mouseout: function (e) {
           e.target.setStyle(geomStyle);
+          e.target.closePopup();
         },
         mouseover: function (e) {
           e.target.setStyle(geomHoverStyle);
+          e.target.bindPopup("<b>" + e.target.feature.properties.name + "!</b>").openPopup();
         },
         click: function (e) {
           // This zooms the map to the clicked geometry
